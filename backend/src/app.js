@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import pool from "./config/database.js";
 import userRoutes from "./routes/userRoutes.js";
 import cameraRoutes from "./routes/cameraRoutes.js";
+import npcRoutes from "./routes/npcRoutes.js";
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/cameras", cameraRoutes);
+app.use("/api/npcs", npcRoutes);
 
 
 // Test database connection
