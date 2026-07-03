@@ -11,3 +11,23 @@ export async function createUserRepository(username) {
 
   return result.rows[0];
 }
+
+export async function getUsersRepository() {
+  const result = await pool.query(
+    "SELECT * FROM users ORDER BY id;"
+  );
+
+  return result.rows;
+}
+
+export async function getUserByUsernameRepository(username) {
+  const query = `
+    SELECT *
+    FROM users
+    WHERE username = $1;
+  `;
+
+  const result = await pool.query(query, [username]);
+
+  return result.rows[0];
+}
