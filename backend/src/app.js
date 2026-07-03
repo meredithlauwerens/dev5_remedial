@@ -5,6 +5,7 @@ import pool from "./config/database.js";
 import userRoutes from "./routes/userRoutes.js";
 import cameraRoutes from "./routes/cameraRoutes.js";
 import npcRoutes from "./routes/npcRoutes.js";
+import { startSimulation } from "./services/simulationService.js";
 
 dotenv.config();
 
@@ -38,4 +39,6 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+
+  startSimulation();
 });

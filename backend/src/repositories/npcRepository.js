@@ -32,3 +32,21 @@ export async function getNpcByNameRepository(name) {
 
   return result.rows[0];
 }
+
+export async function updateNpcPositionRepository(id, currentX, currentY) {
+  const query = `
+    UPDATE npcs
+    SET current_x = $1,
+        current_y = $2
+    WHERE id = $3
+    RETURNING *;
+  `;
+
+  const result = await pool.query(query, [
+    currentX,
+    currentY,
+    id,
+  ]);
+
+  return result.rows[0];
+}
