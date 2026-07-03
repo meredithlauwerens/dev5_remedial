@@ -31,3 +31,15 @@ export async function getUserByUsernameRepository(username) {
 
   return result.rows[0];
 }
+
+export async function getUserByIdRepository(id) {
+  const query = `
+    SELECT *
+    FROM users
+    WHERE id = $1;
+  `;
+
+  const result = await pool.query(query, [id]);
+
+  return result.rows[0];
+}
