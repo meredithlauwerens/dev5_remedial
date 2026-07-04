@@ -27,3 +27,19 @@ export async function getCameras() {
 
     return response.json();
 }
+
+export async function createCamera(camera) {
+    const response = await fetch(`${API_URL}/cameras`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(camera),
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to create camera");
+    }
+
+    return response.json();
+}

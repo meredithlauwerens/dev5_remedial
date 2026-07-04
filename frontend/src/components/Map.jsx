@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
-import { getCameras } from "../services/api";
+import { getCameras, createCamera } from "../services/api";
+import { useAuth } from "../context/AuthContext";
 
 export default function Map() {
 	const size = 20;
 
 	const [cameras, setCameras] = useState([]);
+	const { user } = useAuth();
 
-	useEffect(() => {
-		async function loadCameras() {
+	async function loadCameras() {
+		try {
 			const data = await getCameras();
 			setCameras(data);
+		} catch (error) {
+			console.error(error);
 		}
+	}
 
+	useEffect(() => {
 		loadCameras();
 	}, []);
 
@@ -30,12 +36,25 @@ export default function Map() {
 
 				const camera = cameras.find((camera) => camera.x === x && camera.y === y);
 
+				async function handleCreateCamera(x, y) {
+					try {
+						await createCamera({
+							userId: user.id,
+							x,
+							y,
+							range: 3,
+						});
+
+						await loadCameras();
+					} catch (error) {
+						console.error(error);
+					}
+				}
+
 				return (
 					<div
 						key={index}
-						onClick={() => {
-							console.log(`Clicked (${x}, ${y})`);
-						}}
+						onClick={() => handleCreateCamera(x, y)}
 						style={{
 							width: "28px",
 							height: "28px",
