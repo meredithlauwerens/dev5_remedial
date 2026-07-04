@@ -17,3 +17,13 @@ export async function login(username) {
 
     return response.json();
 }
+
+export async function getCameras() {
+    const response = await fetch("http://localhost:3000/api/cameras");
+
+    if (!response.ok) {
+        throw new Error("Failed to load cameras");
+    }
+
+    return response.json();
+}
