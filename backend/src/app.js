@@ -7,6 +7,7 @@ import cameraRoutes from "./routes/cameraRoutes.js";
 import npcRoutes from "./routes/npcRoutes.js";
 import { startSimulation } from "./services/simulationService.js";
 import sightingRoutes from "./routes/sightingRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/cameras", cameraRoutes);
 app.use("/api/npcs", npcRoutes);
 app.use("/api/sightings", sightingRoutes);
+app.use("/api/auth", authRoutes);
 
 
 // Test database connection
