@@ -13,7 +13,17 @@ export async function createCameraRepository(userId, x, y, range) {
 }
 
 export async function getCamerasRepository() {
-	const result = await pool.query("SELECT * FROM cameras ORDER BY id;");
+	const query = `
+        SELECT
+            cameras.*,
+            users.username
+        FROM cameras
+        JOIN users
+            ON cameras.user_id = users.id
+        ORDER BY cameras.id;
+    `;
+
+	const result = await pool.query(query);
 
 	return result.rows;
 }

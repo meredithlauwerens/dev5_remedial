@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getCameras, createCamera } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
-export default function Map() {
+export default function Map({ selectedCamera, setSelectedCamera }) {
 	const size = 20;
 
 	const [cameras, setCameras] = useState([]);
@@ -54,7 +54,15 @@ export default function Map() {
 				return (
 					<div
 						key={index}
-						onClick={() => handleCreateCamera(x, y)}
+						onClick={() => {
+							const existingCamera = cameras.find((camera) => camera.x === x && camera.y === y);
+
+							if (existingCamera) {
+								setSelectedCamera(existingCamera);
+							} else {
+								handleCreateCamera(x, y);
+							}
+						}}
 						style={{
 							width: "28px",
 							height: "28px",
