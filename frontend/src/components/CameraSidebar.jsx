@@ -1,4 +1,14 @@
+import { useState, useEffect } from "react";
+import { updateCamera } from "../services/api";
+import PropTypes from "prop-types";
+
 export default function CameraSidebar({ camera, currentUser }) {
+	const [range, setRange] = useState(camera?.range?.toString() || "");
+
+	useEffect(() => {
+		setRange(camera?.range?.toString() || "");
+	}, [camera]);
+
 	if (!camera) {
 		return (
 			<div
@@ -17,6 +27,27 @@ export default function CameraSidebar({ camera, currentUser }) {
 
 	const isOwner = camera.user_id === currentUser.id;
 
+	async function handleSave() {
+		try {
+			await updateCamera(camera.id, Number(range));
+			alert("Camera updated!");
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	async function handleDelete() {
+		try {
+			await deleteCamera(camera.id);
+
+			alert("Camera deleted");
+
+			// We'll refresh the map afterwards.
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
 	return (
 		<div
 			style={{
@@ -26,7 +57,7 @@ export default function CameraSidebar({ camera, currentUser }) {
 			}}
 		>
 			<h2>Camera Information</h2>
-            
+
 			<p>
 				<strong>📷 Camera #{camera.id}</strong>
 			</p>
@@ -39,17 +70,38 @@ export default function CameraSidebar({ camera, currentUser }) {
 				<strong>Position:</strong> ({camera.x}, {camera.y})
 			</p>
 
-			<p>
-				<strong>Range:</strong> {camera.range}
-			</p>
-
-			{isOwner && (
+			{isOwner ? (
 				<>
-					<button>Edit</button>
+					<p>
+						<strong>Range:</strong>
+					</p>
 
-					<button>Delete</button>
+					<input type="number" min="1" value={range} onChange={(e) => setRange(e.target.value)} />
+					<button onClick={handleSave}>Save</button>
+					<button onClick={handleDelete}>Delete</button>
+				</>
+			) : (
+				<>
+					<p>
+						<strong>Range:</strong> {camera.range}
+					</p>
 				</>
 			)}
 		</div>
 	);
 }
+
+CameraSidebar.propTypes = {
+	camera: PropTypes.shape({
+		id: PropTypes.number,
+		user_id: PropTypes.number,
+		username: PropTypes.string,
+		x: PropTypes.number,
+		y: PropTypes.number,
+		range: PropTypes.number,
+	}),
+	currentUser: PropTypes.shape({
+		id: PropTypes.number.isRequired,
+		username: PropTypes.string.isRequired,
+	}).isRequired,
+};

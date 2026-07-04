@@ -1,16 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import Map from "../components/Map";
 import CameraSidebar from "../components/CameraSidebar";
+import { getCameras } from "../services/api";
 
 export default function MapPage() {
 	const { user } = useAuth();
 	const [selectedCamera, setSelectedCamera] = useState(null);
+	const [cameras, setCameras] = useState([]);
+
+	async function loadCameras() {
+		try {
+			const data = await getCameras();
+			setCameras(data);
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	useEffect(() => {
+		loadCameras();
+	}, []);
 
 	return (
 		<div>
 			<h1>Neighborhood Surveillance</h1>
-			<h2>Welcome {user.username}</h2>
+			<h2>Welcome {user?.username}</h2>
 
 			<div
 				style={{
@@ -19,9 +34,9 @@ export default function MapPage() {
 					gap: "30px",
 				}}
 			>
-				<Map selectedCamera={selectedCamera} setSelectedCamera={setSelectedCamera} />
+				<Map cameras={cameras} loadCameras={loadCameras} selectedCamera={selectedCamera} setSelectedCamera={setSelectedCamera} />
 
-				<CameraSidebar camera={selectedCamera} currentUser={user} />
+				<CameraSidebar camera={selectedCamera} currentUser={user} loadCameras={loadCameras} setSelectedCamera={setSelectedCamera} />
 			</div>
 		</div>
 	);

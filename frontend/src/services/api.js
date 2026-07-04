@@ -43,3 +43,29 @@ export async function createCamera(camera) {
 
     return response.json();
 }
+
+export async function updateCamera(id, range) {
+    const response = await fetch(`${API_URL}/cameras/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ range }),
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to update camera");
+    }
+
+    return response.json();
+}
+
+export async function deleteCamera(id) {
+    const response = await fetch(`${API_URL}/cameras/${id}`, {
+        method: "DELETE",
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to delete camera");
+    }
+}

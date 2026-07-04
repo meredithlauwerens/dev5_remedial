@@ -33,3 +33,28 @@ export async function getCameraByPositionRepository(x, y) {
 
 	return result.rows[0];
 }
+
+export async function updateCameraRepository(id, range) {
+    const query = `
+        UPDATE cameras
+        SET range = $1
+        WHERE id = $2
+        RETURNING *;
+    `;
+
+    const result = await pool.query(query, [range, id]);
+
+    return result.rows[0];
+}
+
+export async function deleteCameraRepository(id) {
+    const query = `
+        DELETE FROM cameras
+        WHERE id = $1
+        RETURNING *;
+    `;
+
+    const result = await pool.query(query, [id]);
+
+    return result.rows[0];
+}

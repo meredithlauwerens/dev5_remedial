@@ -1,4 +1,4 @@
-import { createCameraRepository, getCamerasRepository, getCameraByPositionRepository } from "../repositories/cameraRepository.js";
+import { createCameraRepository, getCamerasRepository, getCameraByPositionRepository, updateCameraRepository, deleteCameraRepository } from "../repositories/cameraRepository.js";
 import { getUserByIdRepository } from "../repositories/userRepository.js";
 
 export async function createCameraService(data) {
@@ -35,4 +35,26 @@ export async function createCameraService(data) {
 
 export async function getCamerasService() {
 	return await getCamerasRepository();
+}
+
+export async function updateCameraService(id, range) {
+	if (range <= 0) {
+		const error = new Error("Range must be greater than zero.");
+		error.status = 400;
+		throw error;
+	}
+
+	return await updateCameraRepository(id, range);
+}
+
+export async function deleteCameraService(id) {
+	const camera = await deleteCameraRepository(id);
+
+	if (!camera) {
+		const error = new Error("Camera not found.");
+		error.status = 404;
+		throw error;
+	}
+
+	return camera;
 }
