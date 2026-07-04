@@ -6,6 +6,7 @@ import userRoutes from "./routes/userRoutes.js";
 import cameraRoutes from "./routes/cameraRoutes.js";
 import npcRoutes from "./routes/npcRoutes.js";
 import { startSimulation } from "./services/simulationService.js";
+import sightingRoutes from "./routes/sightingRoutes.js";
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/cameras", cameraRoutes);
 app.use("/api/npcs", npcRoutes);
+app.use("/api/sightings", sightingRoutes);
 
 
 // Test database connection
