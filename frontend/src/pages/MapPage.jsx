@@ -10,12 +10,9 @@ export default function MapPage() {
 	const [cameras, setCameras] = useState([]);
 
 	async function loadCameras() {
-		try {
-			const data = await getCameras();
-			setCameras(data);
-		} catch (error) {
-			console.error(error);
-		}
+		const data = await getCameras();
+		setCameras(data);
+		return data;
 	}
 
 	useEffect(() => {

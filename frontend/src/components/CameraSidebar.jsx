@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { updateCamera } from "../services/api";
+import { updateCamera, deleteCamera, getCameras } from "../services/api";
 import PropTypes from "prop-types";
 
-export default function CameraSidebar({ camera, currentUser }) {
+export default function CameraSidebar({ camera, currentUser, loadCameras, setSelectedCamera }) {
 	const [range, setRange] = useState(camera?.range?.toString() || "");
 
 	useEffect(() => {
@@ -30,6 +30,14 @@ export default function CameraSidebar({ camera, currentUser }) {
 	async function handleSave() {
 		try {
 			await updateCamera(camera.id, Number(range));
+
+			await loadCameras();
+
+			const cameras = await getCameras();
+			const updatedCamera = cameras.find((c) => c.id === camera.id);
+
+			setSelectedCamera(updatedCamera);
+
 			alert("Camera updated!");
 		} catch (error) {
 			console.error(error);
@@ -40,9 +48,11 @@ export default function CameraSidebar({ camera, currentUser }) {
 		try {
 			await deleteCamera(camera.id);
 
-			alert("Camera deleted");
+			await loadCameras();
 
-			// We'll refresh the map afterwards.
+			setSelectedCamera(null);
+
+			alert("Camera deleted");
 		} catch (error) {
 			console.error(error);
 		}
@@ -104,4 +114,6 @@ CameraSidebar.propTypes = {
 		id: PropTypes.number.isRequired,
 		username: PropTypes.string.isRequired,
 	}).isRequired,
+	loadCameras: PropTypes.func.isRequired,
+	setSelectedCamera: PropTypes.func.isRequired,
 };
