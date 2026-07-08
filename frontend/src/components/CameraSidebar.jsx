@@ -28,12 +28,17 @@ export default function CameraSidebar({ camera, currentUser, loadCameras, setSel
 	const isOwner = camera.user_id === currentUser.id;
 
 	async function handleSave() {
+		const value = Number(range);
+
+		if (value < 1 || value > 5) {
+			alert("Range must be between 1 and 5.");
+			return;
+		}
+
 		try {
-			await updateCamera(camera.id, Number(range));
+			await updateCamera(camera.id, value);
 
-			await loadCameras();
-
-			const cameras = await getCameras();
+			const cameras = await loadCameras();
 			const updatedCamera = cameras.find((c) => c.id === camera.id);
 
 			setSelectedCamera(updatedCamera);
@@ -86,7 +91,7 @@ export default function CameraSidebar({ camera, currentUser, loadCameras, setSel
 						<strong>Range:</strong>
 					</p>
 
-					<input type="number" min="1" value={range} onChange={(e) => setRange(e.target.value)} />
+					<input type="number" min="1" max="5" value={range} onChange={(e) => setRange(e.target.value)} />
 					<button onClick={handleSave}>Save</button>
 					<button onClick={handleDelete}>Delete</button>
 				</>

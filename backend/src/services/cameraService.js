@@ -38,8 +38,8 @@ export async function getCamerasService() {
 }
 
 export async function updateCameraService(id, range) {
-	if (range <= 0) {
-		const error = new Error("Range must be greater than zero.");
+	if (range < 1 || range > 5) {
+		const error = new Error("Range must be between 1 and 5.");
 		error.status = 400;
 		throw error;
 	}

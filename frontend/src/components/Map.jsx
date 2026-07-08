@@ -1,7 +1,7 @@
 import { createCamera } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
-export default function Map({ cameras, npcs, loadCameras, setSelectedCamera }) {
+export default function Map({ cameras, npcs, loadCameras, selectedCamera, setSelectedCamera }) {
 	const size = 20;
 
 	const { user } = useAuth();
@@ -37,6 +37,17 @@ export default function Map({ cameras, npcs, loadCameras, setSelectedCamera }) {
 				const camera = cameras.find((camera) => camera.x === x && camera.y === y);
 				const npc = npcs.find((npc) => npc.current_x === x && npc.current_y === y);
 
+				let inRange = false;
+
+				if (selectedCamera) {
+					const dx = x - selectedCamera.x;
+					const dy = y - selectedCamera.y;
+
+					const distance = Math.sqrt(dx * dx + dy * dy);
+
+					inRange = distance <= selectedCamera.range;
+				}
+
 				return (
 					<div
 						key={index}
@@ -57,6 +68,7 @@ export default function Map({ cameras, npcs, loadCameras, setSelectedCamera }) {
 							justifyContent: "center",
 							alignItems: "center",
 							cursor: "pointer",
+							backgroundColor: inRange ? "#d9fdd3" : "white",
 						}}
 					>
 						{camera ? "📷" : npc ? "👤" : ""}
