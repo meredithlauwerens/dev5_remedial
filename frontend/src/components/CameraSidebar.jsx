@@ -123,6 +123,10 @@ export default function CameraSidebar({ camera, currentUser, loadCameras, setSel
 				</>
 			)}
 
+			<p>
+				<strong>Total Sightings:</strong> {sightings.length}
+			</p>
+
 			<hr />
 
 			<h3>Recent Sightings</h3>
