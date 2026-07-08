@@ -1,71 +1,79 @@
 const API_URL = "http://localhost:3000/api";
 
 export async function login(username) {
+	const response = await fetch(`${API_URL}/auth/login`, {
+		method: "POST",
 
-    const response = await fetch(`${API_URL}/auth/login`, {
+		headers: {
+			"Content-Type": "application/json",
+		},
 
-        method: "POST",
+		body: JSON.stringify({
+			username,
+		}),
+	});
 
-        headers: {
-            "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify({
-            username,
-        }),
-    });
-
-    return response.json();
+	return response.json();
 }
 
 export async function getCameras() {
-    const response = await fetch("http://localhost:3000/api/cameras");
+	const response = await fetch("http://localhost:3000/api/cameras");
 
-    if (!response.ok) {
-        throw new Error("Failed to load cameras");
-    }
+	if (!response.ok) {
+		throw new Error("Failed to load cameras");
+	}
 
-    return response.json();
+	return response.json();
 }
 
 export async function createCamera(camera) {
-    const response = await fetch(`${API_URL}/cameras`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(camera),
-    });
+	const response = await fetch(`${API_URL}/cameras`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(camera),
+	});
 
-    if (!response.ok) {
-        throw new Error("Failed to create camera");
-    }
+	if (!response.ok) {
+		throw new Error("Failed to create camera");
+	}
 
-    return response.json();
+	return response.json();
 }
 
 export async function updateCamera(id, range) {
-    const response = await fetch(`${API_URL}/cameras/${id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ range }),
-    });
+	const response = await fetch(`${API_URL}/cameras/${id}`, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({ range }),
+	});
 
-    if (!response.ok) {
-        throw new Error("Failed to update camera");
-    }
+	if (!response.ok) {
+		throw new Error("Failed to update camera");
+	}
 
-    return response.json();
+	return response.json();
 }
 
 export async function deleteCamera(id) {
-    const response = await fetch(`${API_URL}/cameras/${id}`, {
-        method: "DELETE",
-    });
+	const response = await fetch(`${API_URL}/cameras/${id}`, {
+		method: "DELETE",
+	});
 
-    if (!response.ok) {
-        throw new Error("Failed to delete camera");
-    }
+	if (!response.ok) {
+		throw new Error("Failed to delete camera");
+	}
+}
+
+export async function getNpcs() {
+	const response = await fetch(`${API_URL}/npcs`);
+
+	if (!response.ok) {
+		throw new Error("Failed to fetch NPCs");
+	}
+
+	return response.json();
 }

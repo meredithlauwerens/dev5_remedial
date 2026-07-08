@@ -1,7 +1,7 @@
 import { createCamera } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
-export default function Map({ cameras, loadCameras, setSelectedCamera }) {
+export default function Map({ cameras, npcs, loadCameras, setSelectedCamera }) {
 	const size = 20;
 
 	const { user } = useAuth();
@@ -35,6 +35,7 @@ export default function Map({ cameras, loadCameras, setSelectedCamera }) {
 				const y = Math.floor(index / size);
 
 				const camera = cameras.find((camera) => camera.x === x && camera.y === y);
+				const npc = npcs.find((npc) => npc.current_x === x && npc.current_y === y);
 
 				return (
 					<div
@@ -58,7 +59,7 @@ export default function Map({ cameras, loadCameras, setSelectedCamera }) {
 							cursor: "pointer",
 						}}
 					>
-						{camera && "📷"}
+						{camera ? "📷" : npc ? "👤" : ""}
 					</div>
 				);
 			})}
