@@ -1,4 +1,4 @@
-import { createCameraRepository, getCamerasRepository, getCameraByPositionRepository, updateCameraRepository, deleteCameraRepository } from "../repositories/cameraRepository.js";
+import { createCameraRepository, getCamerasRepository, getCameraByPositionRepository, updateCameraRepository, deleteCameraRepository, countUserCamerasRepository } from "../repositories/cameraRepository.js";
 import { getUserByIdRepository } from "../repositories/userRepository.js";
 
 export async function createCameraService(data) {
@@ -30,6 +30,14 @@ export async function createCameraService(data) {
 		throw error;
 	}
 
+	const cameraCount = await countUserCamerasRepository(userId);
+
+	if (cameraCount >= 5) {
+		const error = new Error("You can only own a maximum of 5 cameras.");
+		error.status = 400;
+		throw error;
+	}
+	
 	return await createCameraRepository(userId, x, y, range);
 }
 

@@ -17,7 +17,7 @@ export default function Map({ cameras, npcs, loadCameras, selectedCamera, setSel
 
 			await loadCameras();
 		} catch (error) {
-			console.error(error);
+			alert(error.message);
 		}
 	}
 

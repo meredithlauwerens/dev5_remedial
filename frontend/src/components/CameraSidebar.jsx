@@ -25,8 +25,8 @@ export default function CameraSidebar({ camera, currentUser, loadCameras, setSel
 		);
 	}
 
-	const isOwner = camera.user_id === currentUser.id;
-
+	const isOwner = currentUser && camera.user_id === currentUser.id;
+	
 	async function handleSave() {
 		const value = Number(range);
 

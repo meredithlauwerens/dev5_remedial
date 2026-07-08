@@ -35,26 +35,32 @@ export async function getCameraByPositionRepository(x, y) {
 }
 
 export async function updateCameraRepository(id, range) {
-    const query = `
+	const query = `
         UPDATE cameras
         SET range = $1
         WHERE id = $2
         RETURNING *;
     `;
 
-    const result = await pool.query(query, [range, id]);
+	const result = await pool.query(query, [range, id]);
 
-    return result.rows[0];
+	return result.rows[0];
 }
 
 export async function deleteCameraRepository(id) {
-    const query = `
+	const query = `
         DELETE FROM cameras
         WHERE id = $1
         RETURNING *;
     `;
 
-    const result = await pool.query(query, [id]);
+	const result = await pool.query(query, [id]);
 
-    return result.rows[0];
+	return result.rows[0];
+}
+
+export async function countUserCamerasRepository(userId) {
+	const result = await pool.query("SELECT COUNT(*) FROM cameras WHERE user_id = $1", [userId]);
+
+	return Number(result.rows[0].count);
 }

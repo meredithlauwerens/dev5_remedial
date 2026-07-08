@@ -9,7 +9,8 @@ export default function MapPage() {
 	const [selectedCamera, setSelectedCamera] = useState(null);
 	const [cameras, setCameras] = useState([]);
 	const [npcs, setNpcs] = useState([]);
-
+	const userCameraCount = user ? cameras.filter((camera) => camera.user_id === user.id).length : 0;
+	
 	async function loadCameras() {
 		const data = await getCameras();
 		setCameras(data);
@@ -43,6 +44,8 @@ export default function MapPage() {
 		<div>
 			<h1>Neighborhood Surveillance</h1>
 			<h2>Welcome {user?.username}</h2>
+
+			<p>📷 Your cameras: {userCameraCount} / 5</p>
 
 			<div
 				style={{
