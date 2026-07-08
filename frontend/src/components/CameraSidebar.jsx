@@ -1,12 +1,31 @@
 import { useState, useEffect } from "react";
-import { updateCamera, deleteCamera, getCameras } from "../services/api";
+import { updateCamera, deleteCamera, getCameras, getCameraSightings } from "../services/api";
 import PropTypes from "prop-types";
 
 export default function CameraSidebar({ camera, currentUser, loadCameras, setSelectedCamera }) {
 	const [range, setRange] = useState(camera?.range?.toString() || "");
+	const [sightings, setSightings] = useState([]);
 
 	useEffect(() => {
 		setRange(camera?.range?.toString() || "");
+	}, [camera]);
+
+	useEffect(() => {
+		async function loadSightings() {
+			if (!camera) {
+				setSightings([]);
+				return;
+			}
+
+			try {
+				const data = await getCameraSightings(camera.id);
+				setSightings(data);
+			} catch (error) {
+				console.error(error);
+			}
+		}
+
+		loadSightings();
 	}, [camera]);
 
 	if (!camera) {
@@ -26,7 +45,7 @@ export default function CameraSidebar({ camera, currentUser, loadCameras, setSel
 	}
 
 	const isOwner = currentUser && camera.user_id === currentUser.id;
-	
+
 	async function handleSave() {
 		const value = Number(range);
 
@@ -101,6 +120,30 @@ export default function CameraSidebar({ camera, currentUser, loadCameras, setSel
 						<strong>Range:</strong> {camera.range}
 					</p>
 				</>
+			)}
+
+			<hr />
+
+			<h3>Recent Sightings</h3>
+
+			{sightings.length === 0 ? (
+				<p>No sightings yet.</p>
+			) : (
+				<ul
+					style={{
+						maxHeight: "220px",
+						overflowY: "auto",
+						paddingLeft: "20px",
+					}}
+				>
+					{sightings.map((sighting) => (
+						<li key={sighting.id}>
+							<strong>{sighting.npc_name}</strong>
+							<br />
+							<small>{new Date(sighting.detected_at).toLocaleString()}</small>
+						</li>
+					))}
+				</ul>
 			)}
 		</div>
 	);

@@ -77,3 +77,13 @@ export async function getNpcs() {
 
 	return response.json();
 }
+
+export async function getCameraSightings(cameraId) {
+	const response = await fetch(`${API_URL}/sightings/cameras/${cameraId}`);
+
+	if (!response.ok) {
+		throw new Error("Failed to fetch sightings");
+	}
+
+	return response.json();
+}
