@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { login } from "../services/api";
+import { login as loginApi } from "../services/api";
 
 export default function LoginPage() {
 	const [username, setUsername] = useState("");
 
 	const navigate = useNavigate();
 
-	const { setUser } = useAuth();
+	const { login } = useAuth();
 
 	async function handleLogin() {
 		if (!username.trim()) {
@@ -17,9 +17,9 @@ export default function LoginPage() {
 		}
 
 		try {
-			const user = await login(username.trim());
+			const user = await loginApi(username.trim());
 
-			setUser(user);
+			login(user);
 
 			navigate("/map");
 		} catch (error) {

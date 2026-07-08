@@ -5,15 +5,20 @@ import CameraSidebar from "../components/CameraSidebar";
 import { getCameras, getNpcs, getNpcSightings } from "../services/api";
 import LegendItem from "../components/LegendItem";
 import NpcTrajectorySidebar from "../components/NpcTrajectorySidebar";
+import { useNavigate, Navigate } from "react-router-dom";
 
 export default function MapPage() {
-	const { user } = useAuth();
+	const { user, logout } = useAuth();
+	if (!user) {
+		return <Navigate to="/" replace />;
+	}
 	const [selectedCamera, setSelectedCamera] = useState(null);
 	const [cameras, setCameras] = useState([]);
 	const [npcs, setNpcs] = useState([]);
 	const userCameraCount = user ? cameras.filter((camera) => camera.user_id === user.id).length : 0;
 	const [npcTrajectory, setNpcTrajectory] = useState([]);
 	const [selectedNpc, setSelectedNpc] = useState(null);
+	const navigate = useNavigate();
 
 	async function loadCameras() {
 		const data = await getCameras();
@@ -48,6 +53,11 @@ export default function MapPage() {
 		}
 	}
 
+	function handleLogout() {
+		logout();
+		navigate("/");
+	}
+
 	useEffect(() => {
 		loadCameras();
 		loadNpcs();
@@ -70,13 +80,23 @@ export default function MapPage() {
 			}}
 		>
 			<h1>Neighborhood Surveillance</h1>
-			<h2>Welcome {user?.username}</h2>
 
-			<br />
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "space-between",
+					alignItems: "center",
+				}}
+			>
+				<div>
+					<h2>Welcome {user?.username}</h2>
+					<p>📷 Your cameras: {userCameraCount} / 5</p>
+				</div>
 
-			<p>📷 Your cameras: {userCameraCount} / 5</p>
-
-			<br />
+				<div style={{ display: "flex", alignItems: "center", gap: "20px", marginTop: "-100px"	}}>
+					<button onClick={handleLogout}>Log Out</button>
+				</div>
+			</div>
 
 			<div
 				style={{
