@@ -27,7 +27,7 @@ export default function Map({ cameras, npcs, loadCameras, selectedCamera, setSel
 				display: "grid",
 				gridTemplateColumns: `repeat(${size}, 28px)`,
 				gap: "2px",
-				marginTop: "20px",
+				marginTop: "-30px",
 			}}
 		>
 			{Array.from({ length: size * size }).map((_, index) => {
@@ -36,6 +36,21 @@ export default function Map({ cameras, npcs, loadCameras, selectedCamera, setSel
 
 				const camera = cameras.find((camera) => camera.x === x && camera.y === y);
 				const npc = npcs.find((npc) => npc.current_x === x && npc.current_y === y);
+				const isSelected = camera?.id === selectedCamera?.id && camera;
+
+				let tileColor = "white";
+
+				if (npc) {
+					tileColor = "#4CAF50"; // green
+				}
+
+				if (camera) {
+					if (camera.user_id === user.id) {
+						tileColor = "#2196F3"; // blue (your camera)
+					} else {
+						tileColor = "#9C27B0"; // purple (other user's camera)
+					}
+				}
 
 				let inRange = false;
 
@@ -63,7 +78,7 @@ export default function Map({ cameras, npcs, loadCameras, selectedCamera, setSel
 						style={{
 							width: "28px",
 							height: "28px",
-							border: "1px solid gray",
+							border: isSelected ? "2px solid gold" : "1px solid lightgray",
 							display: "flex",
 							justifyContent: "center",
 							alignItems: "center",
@@ -71,7 +86,16 @@ export default function Map({ cameras, npcs, loadCameras, selectedCamera, setSel
 							backgroundColor: inRange ? "#d9fdd3" : "white",
 						}}
 					>
-						{camera ? "📷" : npc ? "👤" : ""}
+						{(camera || npc) && (
+							<div
+								style={{
+									width: "18px",
+									height: "18px",
+									borderRadius: "50%",
+									backgroundColor: tileColor,
+								}}
+							/>
+						)}
 					</div>
 				);
 			})}

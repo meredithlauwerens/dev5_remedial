@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import Map from "../components/Map";
 import CameraSidebar from "../components/CameraSidebar";
 import { getCameras, getNpcs } from "../services/api";
+import LegendItem from "../components/LegendItem";
 
 export default function MapPage() {
 	const { user } = useAuth();
@@ -10,7 +11,7 @@ export default function MapPage() {
 	const [cameras, setCameras] = useState([]);
 	const [npcs, setNpcs] = useState([]);
 	const userCameraCount = user ? cameras.filter((camera) => camera.user_id === user.id).length : 0;
-	
+
 	async function loadCameras() {
 		const data = await getCameras();
 		setCameras(data);
@@ -41,21 +42,52 @@ export default function MapPage() {
 	}, []);
 
 	return (
-		<div>
+		<div
+			style={{
+				maxWidth: "1300px",
+				margin: "0 auto",
+			}}
+		>
 			<h1>Neighborhood Surveillance</h1>
 			<h2>Welcome {user?.username}</h2>
 
 			<p>📷 Your cameras: {userCameraCount} / 5</p>
 
+			<br />
+
 			<div
 				style={{
 					display: "flex",
 					alignItems: "flex-start",
-					gap: "30px",
+					gap: "50px",
 				}}
 			>
+				{/* Legend */}
+				<div
+					style={{
+						width: "180px",
+						border: "1px solid lightgray",
+						padding: "15px",
+						borderRadius: "8px",
+					}}
+				>
+					<h3>Legend</h3>
+
+					<LegendItem type="circle" color="#2196F3" text="Your Camera" />
+					<br />
+					<LegendItem type="circle" color="#9C27B0" text="Other Camera" />
+					<br />
+					<LegendItem type="circle" color="#4CAF50" text="NPC" />
+					<br />
+					<LegendItem type="square" color="#DFF5E1" text="Camera Range" />
+					<br />
+					<LegendItem type="selected" color="gold" text="Selected Camera" />
+				</div>
+
+				{/* Map */}
 				<Map cameras={cameras} npcs={npcs} loadCameras={loadCameras} selectedCamera={selectedCamera} setSelectedCamera={setSelectedCamera} />
 
+				{/* Sidebar */}
 				<CameraSidebar camera={selectedCamera} currentUser={user} loadCameras={loadCameras} setSelectedCamera={setSelectedCamera} />
 			</div>
 		</div>
