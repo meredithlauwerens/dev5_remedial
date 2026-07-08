@@ -87,7 +87,8 @@ export default function CameraSidebar({ camera, currentUser, loadCameras, setSel
 			style={{
 				width: "280px",
 				borderLeft: "1px solid lightgray",
-				padding: "20px",
+				padding: "10px",
+				marginTop: "-70px",
 			}}
 		>
 			<h2>Camera Information</h2>

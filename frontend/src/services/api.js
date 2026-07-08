@@ -87,3 +87,23 @@ export async function getCameraSightings(cameraId) {
 
 	return response.json();
 }
+
+export async function getNpcSightings(npcId) {
+	const response = await fetch(`${API_URL}/sightings/npcs/${npcId}`);
+
+	if (!response.ok) {
+		throw new Error("Failed to fetch NPC sightings");
+	}
+
+	return response.json();
+}
+
+export async function getNpcTrajectory(npcId) {
+	const response = await fetch(`${API_URL}/sightings/npcs/${npcId}`);
+
+	if (!response.ok) {
+		throw new Error("Failed to fetch trajectory");
+	}
+
+	return response.json();
+}

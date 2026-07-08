@@ -1,7 +1,7 @@
 import { createCamera } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
-export default function Map({ cameras, npcs, loadCameras, selectedCamera, setSelectedCamera }) {
+export default function Map({ cameras, npcs, loadCameras, selectedCamera, setSelectedCamera, npcTrajectory }) {
 	const size = 20;
 
 	const { user } = useAuth();
@@ -27,7 +27,7 @@ export default function Map({ cameras, npcs, loadCameras, selectedCamera, setSel
 				display: "grid",
 				gridTemplateColumns: `repeat(${size}, 28px)`,
 				gap: "2px",
-				marginTop: "-30px",
+				marginTop: "-70px",
 			}}
 		>
 			{Array.from({ length: size * size }).map((_, index) => {
@@ -35,9 +35,11 @@ export default function Map({ cameras, npcs, loadCameras, selectedCamera, setSel
 				const y = Math.floor(index / size);
 
 				const camera = cameras.find((camera) => camera.x === x && camera.y === y);
+				const isNpcTrajectoryCamera = npcTrajectory.some((step) => step.camera_x === x && step.camera_y === y);
 				const npc = npcs.find((npc) => npc.current_x === x && npc.current_y === y);
 				const isSelected = camera?.id === selectedCamera?.id && camera;
 
+				let cellBackground = "white";
 				let tileColor = "white";
 
 				if (npc) {
@@ -63,6 +65,14 @@ export default function Map({ cameras, npcs, loadCameras, selectedCamera, setSel
 					inRange = distance <= selectedCamera.range;
 				}
 
+				if (inRange) {
+					cellBackground = "#d9fdd3";
+				}
+
+				if (isNpcTrajectoryCamera) {
+					cellBackground = "#7aecf9";
+				}
+
 				return (
 					<div
 						key={index}
@@ -83,7 +93,7 @@ export default function Map({ cameras, npcs, loadCameras, selectedCamera, setSel
 							justifyContent: "center",
 							alignItems: "center",
 							cursor: "pointer",
-							backgroundColor: inRange ? "#d9fdd3" : "white",
+							backgroundColor: cellBackground,
 						}}
 					>
 						{(camera || npc) && (

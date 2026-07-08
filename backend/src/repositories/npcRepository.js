@@ -17,11 +17,14 @@ export async function createNpcRepository(name, currentX, currentY) {
 }
 
 export async function getNpcsRepository() {
-  const result = await pool.query(
-    "SELECT * FROM npcs ORDER BY id;"
-  );
+	const result = await pool.query(
+		"SELECT * FROM npcs ORDER BY id;"
+	);
 
-  return result.rows;
+	return result.rows.map((npc) => ({
+		...npc,
+		name: `NPC ${npc.id}`,
+	}));
 }
 
 export async function getNpcByNameRepository(name) {

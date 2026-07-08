@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import Map from "../components/Map";
 import CameraSidebar from "../components/CameraSidebar";
-import { getCameras, getNpcs } from "../services/api";
+import { getCameras, getNpcs, getNpcSightings } from "../services/api";
 import LegendItem from "../components/LegendItem";
+import NpcTrajectorySidebar from "../components/NpcTrajectorySidebar";
 
 export default function MapPage() {
 	const { user } = useAuth();
@@ -11,6 +12,8 @@ export default function MapPage() {
 	const [cameras, setCameras] = useState([]);
 	const [npcs, setNpcs] = useState([]);
 	const userCameraCount = user ? cameras.filter((camera) => camera.user_id === user.id).length : 0;
+	const [npcTrajectory, setNpcTrajectory] = useState([]);
+	const [selectedNpc, setSelectedNpc] = useState(null);
 
 	async function loadCameras() {
 		const data = await getCameras();
@@ -22,6 +25,24 @@ export default function MapPage() {
 		try {
 			const data = await getNpcs();
 			setNpcs(data);
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	async function handleNpcChange(e) {
+		const npcId = e.target.value;
+
+		setSelectedNpc(npcId);
+
+		if (!npcId) {
+			setNpcTrajectory([]);
+			return;
+		}
+
+		try {
+			const data = await getNpcSightings(npcId);
+			setNpcTrajectory(data);
 		} catch (error) {
 			console.error(error);
 		}
@@ -50,6 +71,8 @@ export default function MapPage() {
 		>
 			<h1>Neighborhood Surveillance</h1>
 			<h2>Welcome {user?.username}</h2>
+
+			<br />
 
 			<p>📷 Your cameras: {userCameraCount} / 5</p>
 
@@ -85,10 +108,12 @@ export default function MapPage() {
 				</div>
 
 				{/* Map */}
-				<Map cameras={cameras} npcs={npcs} loadCameras={loadCameras} selectedCamera={selectedCamera} setSelectedCamera={setSelectedCamera} />
+				<Map cameras={cameras} npcs={npcs} npcTrajectory={npcTrajectory} loadCameras={loadCameras} selectedCamera={selectedCamera} setSelectedCamera={setSelectedCamera} />
 
 				{/* Sidebar */}
 				<CameraSidebar camera={selectedCamera} currentUser={user} loadCameras={loadCameras} setSelectedCamera={setSelectedCamera} />
+
+				<NpcTrajectorySidebar npcs={npcs} selectedNpc={selectedNpc} setSelectedNpc={setSelectedNpc} npcTrajectory={npcTrajectory} setNpcTrajectory={setNpcTrajectory} />
 			</div>
 		</div>
 	);
