@@ -1,8 +1,7 @@
 import { getNpcsRepository, updateNpcPositionRepository } from "../repositories/npcRepository.js";
-
 import { getCamerasRepository } from "../repositories/cameraRepository.js";
-
 import { createSightingRepository } from "../repositories/sightingRepository.js";
+import { getObstaclesRepository } from "../repositories/obstacleRepository.js";
 
 const MAP_WIDTH = 20;
 const MAP_HEIGHT = 20;
@@ -37,6 +36,7 @@ export function startSimulation() {
 		try {
 			const npcs = await getNpcsRepository();
 			const cameras = await getCamerasRepository();
+			const obstacles = await getObstaclesRepository();
 
 			for (const npc of npcs) {
 				const move = getRandomMove();
@@ -47,6 +47,12 @@ export function startSimulation() {
 				// Keep NPC inside the map
 				newX = Math.max(0, Math.min(newX, MAP_WIDTH - 1));
 				newY = Math.max(0, Math.min(newY, MAP_HEIGHT - 1));
+
+				const blocked = obstacles.some((obstacle) => obstacle.x === newX && obstacle.y === newY);
+
+				if (blocked) {
+					continue;
+				}
 
 				await updateNpcPositionRepository(npc.id, newX, newY);
 
