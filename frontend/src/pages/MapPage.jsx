@@ -132,11 +132,17 @@ export default function MapPage() {
 					<br />
 					<LegendItem type="circle" color="#9C27B0" text="Other Camera" />
 					<br />
-					<LegendItem type="circle" color="#4CAF50" text="NPC" />
+					<LegendItem type="circle" color="#F54949" text="NPC" />
 					<br />
 					<LegendItem type="square" color="#DFF5E1" text="Camera Range" />
 					<br />
 					<LegendItem type="selected" color="gold" text="Selected Camera" />
+					<br />
+					<LegendItem type="square" color="#C4C4C4" text="Building" />
+					<br />
+					<LegendItem type="square" color="#048C60" text="Tree" />
+					<br />
+					<LegendItem type="square" color="#B0A4DE" text="Car" />
 				</div>
 
 				{/* Map */}

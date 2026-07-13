@@ -44,7 +44,7 @@ export default function Map({ cameras, npcs, obstacles, loadCameras, selectedCam
 				let tileColor = "white";
 
 				if (npc) {
-					tileColor = "#4CAF50"; // green
+					tileColor = "#F54949"; // red
 				}
 
 				if (camera) {
@@ -99,11 +99,14 @@ export default function Map({ cameras, npcs, obstacles, loadCameras, selectedCam
 					>
 						{(camera || npc || obstacle) &&
 							(obstacle ? (
-								<span style={{ fontSize: "18px" }}>
-									{obstacle.type === "building" && "🏠"}
-									{obstacle.type === "tree" && "🌳"}
-									{obstacle.type === "car" && "🚗"}
-								</span>
+								<div
+									style={{
+										width: "18px",
+										height: "18px",
+										borderRadius: "2px",
+										backgroundColor: obstacle.type === "building" ? "#C4C4C4" : obstacle.type === "tree" ? "#048C60" : "#B0A4DE",
+									}}
+								/>
 							) : (
 								<div
 									style={{
