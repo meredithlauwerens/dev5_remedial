@@ -29,6 +29,30 @@ function isNpcInRange(npc, camera) {
 	return distance <= camera.range;
 }
 
+function hasClearLineOfSight(camera, npc, obstacles) {
+	const dx = npc.current_x - camera.x;
+	const dy = npc.current_y - camera.y;
+
+	const steps = Math.max(Math.abs(dx), Math.abs(dy));
+
+	if (steps === 0) {
+		return true;
+	}
+
+	for (let i = 1; i < steps; i++) {
+		const x = Math.round(camera.x + (dx * i) / steps);
+		const y = Math.round(camera.y + (dy * i) / steps);
+
+		const blocked = obstacles.some((obstacle) => obstacle.x === x && obstacle.y === y);
+
+		if (blocked) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 export function startSimulation() {
 	console.log("Simulation started...");
 
@@ -68,8 +92,9 @@ export function startSimulation() {
 					};
 
 					const inRange = isNpcInRange(movedNpc, camera);
+					const clearSight = hasClearLineOfSight(camera, movedNpc, obstacles);
 
-					if (inRange && !activeDetections.has(detectionKey)) {
+					if (inRange && clearSight && !activeDetections.has(detectionKey)) {
 						activeDetections.add(detectionKey);
 
 						await createSightingRepository(npc.id, camera.id);

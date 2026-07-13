@@ -55,7 +55,7 @@ export default function Map({ cameras, npcs, obstacles, loadCameras, selectedCam
 					}
 				}
 
-				let inRange = false;
+				let visible = false;
 
 				if (selectedCamera) {
 					const dx = x - selectedCamera.x;
@@ -63,15 +63,41 @@ export default function Map({ cameras, npcs, obstacles, loadCameras, selectedCam
 
 					const distance = Math.sqrt(dx * dx + dy * dy);
 
-					inRange = distance <= selectedCamera.range;
+					if (distance <= selectedCamera.range) {
+						visible = hasClearLineOfSight(selectedCamera, x, y);
+					}
 				}
 
-				if (inRange) {
+				if (visible) {
 					cellBackground = "#d9fdd3";
 				}
 
 				if (isNpcTrajectoryCamera) {
 					cellBackground = "#7aecf9";
+				}
+
+				function hasClearLineOfSight(camera, targetX, targetY) {
+					const dx = targetX - camera.x;
+					const dy = targetY - camera.y;
+
+					const steps = Math.max(Math.abs(dx), Math.abs(dy));
+
+					if (steps === 0) {
+						return true;
+					}
+
+					for (let i = 1; i < steps; i++) {
+						const x = Math.round(camera.x + (dx * i) / steps);
+						const y = Math.round(camera.y + (dy * i) / steps);
+
+						const blocked = obstacles.some((obstacle) => obstacle.x === x && obstacle.y === y);
+
+						if (blocked) {
+							return false;
+						}
+					}
+
+					return true;
 				}
 
 				return (
