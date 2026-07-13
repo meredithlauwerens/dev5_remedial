@@ -71,8 +71,7 @@ export function startSimulation() {
 				// Keep NPC inside the map
 				newX = Math.max(0, Math.min(newX, MAP_WIDTH - 1));
 				newY = Math.max(0, Math.min(newY, MAP_HEIGHT - 1));
-
-				const blocked = obstacles.some((obstacle) => obstacle.x === newX && obstacle.y === newY);
+				const blocked = obstacles.some((obstacle) => obstacle.x === newX && obstacle.y === newY) || cameras.some((camera) => camera.x === newX && camera.y === newY);
 
 				if (blocked) {
 					continue;
