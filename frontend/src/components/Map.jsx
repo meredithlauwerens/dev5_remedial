@@ -82,6 +82,8 @@ export default function Map({ cameras, npcs, obstacles, loadCameras, selectedCam
 
 							if (existingCamera) {
 								setSelectedCamera(existingCamera);
+							} else if (obstacle) {
+								alert("You cannot place a camera on an obstacle.");
 							} else {
 								handleCreateCamera(x, y);
 							}
