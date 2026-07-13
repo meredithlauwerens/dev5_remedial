@@ -107,3 +107,13 @@ export async function getNpcTrajectory(npcId) {
 
 	return response.json();
 }
+
+export async function getObstacles() {
+	const response = await fetch("http://localhost:3000/api/obstacles");
+
+	if (!response.ok) {
+		throw new Error("Failed to fetch obstacles");
+	}
+
+	return response.json();
+}

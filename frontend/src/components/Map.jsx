@@ -1,7 +1,7 @@
 import { createCamera } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
-export default function Map({ cameras, npcs, loadCameras, selectedCamera, setSelectedCamera, npcTrajectory }) {
+export default function Map({ cameras, npcs, obstacles, loadCameras, selectedCamera, setSelectedCamera, npcTrajectory }) {
 	const size = 20;
 
 	const { user } = useAuth();
@@ -38,6 +38,7 @@ export default function Map({ cameras, npcs, loadCameras, selectedCamera, setSel
 				const isNpcTrajectoryCamera = npcTrajectory.some((step) => step.camera_x === x && step.camera_y === y);
 				const npc = npcs.find((npc) => npc.current_x === x && npc.current_y === y);
 				const isSelected = camera?.id === selectedCamera?.id && camera;
+				const obstacle = obstacles.find((obstacle) => obstacle.x === x && obstacle.y === y);
 
 				let cellBackground = "white";
 				let tileColor = "white";
@@ -96,16 +97,23 @@ export default function Map({ cameras, npcs, loadCameras, selectedCamera, setSel
 							backgroundColor: cellBackground,
 						}}
 					>
-						{(camera || npc) && (
-							<div
-								style={{
-									width: "18px",
-									height: "18px",
-									borderRadius: "50%",
-									backgroundColor: tileColor,
-								}}
-							/>
-						)}
+						{(camera || npc || obstacle) &&
+							(obstacle ? (
+								<span style={{ fontSize: "18px" }}>
+									{obstacle.type === "building" && "🏠"}
+									{obstacle.type === "tree" && "🌳"}
+									{obstacle.type === "car" && "🚗"}
+								</span>
+							) : (
+								<div
+									style={{
+										width: "18px",
+										height: "18px",
+										borderRadius: "50%",
+										backgroundColor: tileColor,
+									}}
+								/>
+							))}
 					</div>
 				);
 			})}

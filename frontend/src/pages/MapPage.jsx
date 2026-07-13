@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import Map from "../components/Map";
 import CameraSidebar from "../components/CameraSidebar";
-import { getCameras, getNpcs, getNpcSightings } from "../services/api";
+import { getCameras, getNpcs, getNpcSightings, getObstacles } from "../services/api";
 import LegendItem from "../components/LegendItem";
 import NpcTrajectorySidebar from "../components/NpcTrajectorySidebar";
 import { useNavigate, Navigate } from "react-router-dom";
@@ -18,6 +18,7 @@ export default function MapPage() {
 	const userCameraCount = user ? cameras.filter((camera) => camera.user_id === user.id).length : 0;
 	const [npcTrajectory, setNpcTrajectory] = useState([]);
 	const [selectedNpc, setSelectedNpc] = useState(null);
+	const [obstacles, setObstacles] = useState([]);
 	const navigate = useNavigate();
 
 	async function loadCameras() {
@@ -53,6 +54,16 @@ export default function MapPage() {
 		}
 	}
 
+	async function loadObstacles() {
+		try {
+			const data = await getObstacles();
+
+			setObstacles(data);
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
 	function handleLogout() {
 		logout();
 		navigate("/");
@@ -61,6 +72,7 @@ export default function MapPage() {
 	useEffect(() => {
 		loadCameras();
 		loadNpcs();
+		loadObstacles();
 	}, []);
 
 	// Set up an interval to fetch NPCs every 2 seconds (make npcs move live)
@@ -93,7 +105,7 @@ export default function MapPage() {
 					<p>📷 Your cameras: {userCameraCount} / 5</p>
 				</div>
 
-				<div style={{ display: "flex", alignItems: "center", gap: "20px", marginTop: "-100px"	}}>
+				<div style={{ display: "flex", alignItems: "center", gap: "20px", marginTop: "-100px" }}>
 					<button onClick={handleLogout}>Log Out</button>
 				</div>
 			</div>
@@ -128,7 +140,7 @@ export default function MapPage() {
 				</div>
 
 				{/* Map */}
-				<Map cameras={cameras} npcs={npcs} npcTrajectory={npcTrajectory} loadCameras={loadCameras} selectedCamera={selectedCamera} setSelectedCamera={setSelectedCamera} />
+				<Map cameras={cameras} npcs={npcs} obstacles={obstacles} npcTrajectory={npcTrajectory} loadCameras={loadCameras} selectedCamera={selectedCamera} setSelectedCamera={setSelectedCamera} />
 
 				{/* Sidebar */}
 				<CameraSidebar camera={selectedCamera} currentUser={user} loadCameras={loadCameras} setSelectedCamera={setSelectedCamera} />
