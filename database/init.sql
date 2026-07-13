@@ -45,3 +45,11 @@ CREATE TABLE sightings (
         REFERENCES npcs(id)
         ON DELETE CASCADE
 );
+
+-- OBSTACLES
+CREATE TABLE obstacles (
+    id SERIAL PRIMARY KEY,
+    type VARCHAR(20) NOT NULL,
+    x INTEGER NOT NULL,
+    y INTEGER NOT NULL
+);
