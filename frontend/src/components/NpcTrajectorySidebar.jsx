@@ -23,6 +23,8 @@ export default function NpcTrajectorySidebar({ selectedNpc, npcs, setSelectedNpc
 		loadTrajectory();
 	}, [selectedNpc]);
 
+	const uniqueCameraCount = new Set(npcTrajectory.map((step) => step.camera_id)).size;
+
 	return (
 		<div
 			style={{
@@ -59,6 +61,16 @@ export default function NpcTrajectorySidebar({ selectedNpc, npcs, setSelectedNpc
 					</option>
 				))}
 			</select>
+
+			<p>
+				<strong>Total sightings:</strong> {npcTrajectory.length}
+			</p>
+
+			<p>
+				<strong>Different cameras:</strong> {uniqueCameraCount}
+			</p>
+
+			<hr />
 
 			{!selectedNpc ? (
 				<p>Select an NPC.</p>
