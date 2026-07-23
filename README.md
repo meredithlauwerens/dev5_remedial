@@ -181,3 +181,5 @@ Open terminal and insert:
 * How to Style in CSS: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/align-content 
 * React Documentation: https://react.dev/reference/react 
 * Helptool Coding: https://chatgpt.com/share/6a54f313-c468-83eb-9368-bb9216d86266 
+* Writing a changelog: https://keepachangelog.com/en/1.0.0/ 
+* Semantic versioning: https://semver.org/spec/v2.0.0.html 
