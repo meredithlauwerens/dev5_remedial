@@ -87,6 +87,7 @@ By participating in this community, you agree to uphold and follow this Code of 
 ## Questions or Concerns?
 
 If you have questions about this Code of Conduct or concerns about how it's being applied, please reach out to meredith.lauwerens@gmail.com .
+
 ---
 
 **Last Updated**: July 2026
