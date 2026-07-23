@@ -176,7 +176,7 @@ Open terminal and insert:
 ## References
 
 * Readme Documentation: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes 
-* Conventional Commit Messages: https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13 
+* Conventional Commit Messages: https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13 , https://www.conventionalcommits.org/en/v1.0.0/ 
 * Creating New Branch in Git: https://www.geeksforgeeks.org/git/how-to-create-a-new-branch-in-git/
 * How to Style in CSS: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/align-content 
 * React Documentation: https://react.dev/reference/react 
