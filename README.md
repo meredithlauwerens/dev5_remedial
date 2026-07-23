@@ -156,7 +156,7 @@ Notes: The backend registers routes in `src/app.js`. Review controller implement
 
 ## License
 
-This project is MIT licensed
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Technologies used
 
