@@ -37,26 +37,6 @@ The following behaviors are unacceptable and will not be tolerated:
 - **Retaliation**: Taking adverse action against someone for reporting concerns or participating in an investigation
 - **Violation of Privacy**: Sharing personal information without consent or violating confidentiality
 
-## Reporting Concerns
-
-If you witness or experience unacceptable behavior, please report it:
-
-1. **Direct Communication** (if safe): Address the concern directly with the individual involved
-2. **Report to Leadership**: Contact a project lead, manager, or designated point of contact
-3. **Formal Report**: Submit a written report documenting the incident, including:
-   - What happened
-   - When and where it occurred
-   - Who was involved
-   - Any witnesses
-   - Actions you've taken so far
-
-## Confidentiality & Non-Retaliation
-
-- All reports will be treated with confidentiality and discretion
-- We prohibit retaliation against anyone for reporting a concern in good faith
-- We are committed to investigating all reports thoroughly and fairly
-- We will take appropriate action based on the findings
-
 ## Enforcement
 
 Violations of this Code of Conduct may result in:
