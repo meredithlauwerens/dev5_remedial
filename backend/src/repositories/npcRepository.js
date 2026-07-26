@@ -21,6 +21,7 @@ export async function getNpcsRepository() {
 		"SELECT * FROM npcs ORDER BY id;"
 	);
 
+  // Assigns a consistent display name based on the NPC's database ID
 	return result.rows.map((npc) => ({
 		...npc,
 		name: `NPC ${npc.id}`,

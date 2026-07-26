@@ -19,6 +19,7 @@ export async function getSightingsRepository() {
 }
 
 export async function getSightingsByCameraRepository(cameraId) {
+	// Creates a consistent display name using the NPC's database ID
 	const query = `
 		SELECT
 			sightings.id,

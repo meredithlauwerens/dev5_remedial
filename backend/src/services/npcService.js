@@ -5,6 +5,7 @@ import {
 } from "../repositories/npcRepository.js";
 
 export async function createNpcService(data) {
+  // Removes leading and trailing whitespace from the NPC name
   const name = data.name?.trim();
   const { currentX, currentY } = data;
 

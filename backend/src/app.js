@@ -24,7 +24,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/obstacles", obstacleRoutes);
 
 
-// Test database connection
+// Test database connection when server starts
 pool.query("SELECT NOW()")
   .then((result) => {
     console.log("Connected to PostgreSQL");
@@ -40,7 +40,6 @@ app.get("/", (req, res) => {
 res.send("Backend is running");
 });
 
-//port
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {

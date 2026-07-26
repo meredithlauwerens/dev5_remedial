@@ -3,6 +3,8 @@ import {
   getNpcsService,
 } from "../services/npcService.js";
 
+// Handles NPC API requests and delegates the logic to the NPC service
+
 export async function createNpc(req, res) {
   try {
     const npc = await createNpcService(req.body);

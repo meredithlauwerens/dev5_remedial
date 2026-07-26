@@ -1,5 +1,7 @@
 import { createCameraService, getCamerasService, updateCameraService, deleteCameraService } from "../services/cameraService.js";
 
+// Handles camera API requests and delegates the business logic to the camera service
+
 export async function createCamera(req, res) {
 	try {
 		const camera = await createCameraService(req.body);
@@ -26,6 +28,7 @@ export async function getCameras(req, res) {
 
 export async function updateCamera(req, res) {
 	try {
+		// Only the camera range can be updated through this endpoint
 		const camera = await updateCameraService(req.params.id, req.body.range);
 
 		res.json(camera);

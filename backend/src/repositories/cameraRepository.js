@@ -62,5 +62,6 @@ export async function deleteCameraRepository(id) {
 export async function countUserCamerasRepository(userId) {
 	const result = await pool.query("SELECT COUNT(*) FROM cameras WHERE user_id = $1", [userId]);
 
+    // PostgreSQL returns COUNT as a string, so it is converted to a number
 	return Number(result.rows[0].count);
 }

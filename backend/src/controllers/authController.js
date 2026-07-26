@@ -1,5 +1,7 @@
 import { loginService } from "../services/authService.js";
 
+// Handles the login request and returns the authenticated user
+
 export async function login(req, res) {
   try {
     const { username } = req.body;

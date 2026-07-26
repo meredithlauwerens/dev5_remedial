@@ -1,4 +1,4 @@
-//reusable connection pool to the database
+// Reusable connection pool to the database
 
 import pg from "pg";
 import dotenv from "dotenv";

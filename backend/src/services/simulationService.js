@@ -6,15 +6,15 @@ import { getObstaclesRepository } from "../repositories/obstacleRepository.js";
 const MAP_WIDTH = 20;
 const MAP_HEIGHT = 20;
 
-// Keeps track of NPC-camera pairs currently in range
+// Prevents repeated sightings while an NPC remains detected by the same camera
 const activeDetections = new Set();
 
 function getRandomMove() {
 	const moves = [
-		{ x: 0, y: 1 }, // Up
-		{ x: 0, y: -1 }, // Down
-		{ x: 1, y: 0 }, // Right
-		{ x: -1, y: 0 }, // Left
+		{ x: 0, y: 1 },
+		{ x: 0, y: -1 },
+		{ x: 1, y: 0 }, 
+		{ x: -1, y: 0 }, 
 	];
 
 	return moves[Math.floor(Math.random() * moves.length)];
@@ -24,11 +24,13 @@ function isNpcInRange(npc, camera) {
 	const dx = npc.current_x - camera.x;
 	const dy = npc.current_y - camera.y;
 
+	// Uses the distance between the NPC and camera to determine whether the NPC is within range
 	const distance = Math.sqrt(dx * dx + dy * dy);
 
 	return distance <= camera.range;
 }
 
+// Checks each position between the camera and NPC to see if an obstacle blocks the view
 function hasClearLineOfSight(camera, npc, obstacles) {
 	const dx = npc.current_x - camera.x;
 	const dy = npc.current_y - camera.y;
@@ -68,9 +70,10 @@ export function startSimulation() {
 				let newX = npc.current_x + move.x;
 				let newY = npc.current_y + move.y;
 
-				// Keep NPC inside the map
+				// Keep NPC movement within the defined map boundaries
 				newX = Math.max(0, Math.min(newX, MAP_WIDTH - 1));
 				newY = Math.max(0, Math.min(newY, MAP_HEIGHT - 1));
+				// Prevents NPC's from moving onto obstacles or camera positions
 				const blocked = obstacles.some((obstacle) => obstacle.x === newX && obstacle.y === newY) || cameras.some((camera) => camera.x === newX && camera.y === newY);
 
 				if (blocked) {
@@ -82,6 +85,7 @@ export function startSimulation() {
 				console.log(`${npc.name} moved to (${newX}, ${newY})`);
 
 				for (const camera of cameras) {
+					// Creates a unique key for each NPC-camera pair to track active detections
 					const detectionKey = `${npc.id}-${camera.id}`;
 
 					const movedNpc = {

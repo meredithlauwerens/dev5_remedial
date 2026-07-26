@@ -32,6 +32,7 @@ export async function createCameraService(data) {
 
 	const cameraCount = await countUserCamerasRepository(userId);
 
+	// Limits each user to a maximum of 5 cameras
 	if (cameraCount >= 5) {
 		const error = new Error("You can only own a maximum of 5 cameras.");
 		error.status = 400;
@@ -46,6 +47,7 @@ export async function getCamerasService() {
 }
 
 export async function updateCameraService(id, range) {
+	// Camera range must be between 1 and 5 when updating an existing camera
 	if (range < 1 || range > 5) {
 		const error = new Error("Range must be between 1 and 5.");
 		error.status = 400;
