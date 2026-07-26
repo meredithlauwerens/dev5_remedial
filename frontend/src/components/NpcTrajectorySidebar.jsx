@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getNpcTrajectory } from "../services/api";
 import PropTypes from "prop-types";
 
 export default function NpcTrajectorySidebar({ selectedNpc, npcs, setSelectedNpc, npcTrajectory, setNpcTrajectory }) {
 	useEffect(() => {
-		console.log("Selected NPC:", selectedNpc);
+		// Reloads the selected NPC's sightings whenever the selected NPC changes
 		async function loadTrajectory() {
 			if (!selectedNpc) {
 				setNpcTrajectory([]);
@@ -13,7 +13,6 @@ export default function NpcTrajectorySidebar({ selectedNpc, npcs, setSelectedNpc
 
 			try {
 				const data = await getNpcTrajectory(selectedNpc.id);
-				console.log(data);
 				setNpcTrajectory(data);
 			} catch (error) {
 				console.error(error);
@@ -23,6 +22,7 @@ export default function NpcTrajectorySidebar({ selectedNpc, npcs, setSelectedNpc
 		loadTrajectory();
 	}, [selectedNpc]);
 
+	// Counts how many different cameras have detected the selected NPC
 	const uniqueCameraCount = new Set(npcTrajectory.map((step) => step.camera_id)).size;
 
 	return (

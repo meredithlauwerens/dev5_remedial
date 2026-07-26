@@ -10,6 +10,7 @@ export function startNpcSimulation() {
                 let x = npc.x;
                 let y = npc.y;
 
+                // Randomly moves each NPC one cell in one of the four cardinal directions
                 const direction = Math.floor(Math.random() * 4);
 
                 switch (direction) {
@@ -27,7 +28,7 @@ export function startNpcSimulation() {
                         break;
                 }
 
-                // Keep inside the 20x20 map
+                // Keeps NPC's within the 20x20 map boundaries
                 x = Math.max(0, Math.min(19, x));
                 y = Math.max(0, Math.min(19, y));
 

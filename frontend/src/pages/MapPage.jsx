@@ -9,13 +9,17 @@ import { useNavigate, Navigate } from "react-router-dom";
 
 export default function MapPage() {
 	const { user, logout } = useAuth();
+	// Redirects users to the login page when they are not authenticated
 	if (!user) {
 		return <Navigate to="/" replace />;
 	}
 	const [selectedCamera, setSelectedCamera] = useState(null);
 	const [cameras, setCameras] = useState([]);
 	const [npcs, setNpcs] = useState([]);
+
+	// Counts only cameras owned by the currently logged-in user
 	const userCameraCount = user ? cameras.filter((camera) => camera.user_id === user.id).length : 0;
+	
 	const [npcTrajectory, setNpcTrajectory] = useState([]);
 	const [selectedNpc, setSelectedNpc] = useState(null);
 	const [obstacles, setObstacles] = useState([]);
@@ -75,7 +79,7 @@ export default function MapPage() {
 		loadObstacles();
 	}, []);
 
-	// Set up an interval to fetch NPCs every 2 seconds (make npcs move live)
+	// Refreshes NPC positions every 2 seconds so their movement is shown live
 	useEffect(() => {
 		const interval = setInterval(() => {
 			loadNpcs();

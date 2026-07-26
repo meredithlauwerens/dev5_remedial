@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
+// Provides authentication state and actions to components throughout the app
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {

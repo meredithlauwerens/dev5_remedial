@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { updateCamera, deleteCamera, getCameras, getCameraSightings } from "../services/api";
+import { updateCamera, deleteCamera, getCameraSightings } from "../services/api";
 import PropTypes from "prop-types";
 
 export default function CameraSidebar({ camera, currentUser, loadCameras, setSelectedCamera }) {
@@ -11,6 +11,7 @@ export default function CameraSidebar({ camera, currentUser, loadCameras, setSel
 	}, [camera]);
 
 	useEffect(() => {
+		// Reload sightings whenever a different camera is selected
 		async function loadSightings() {
 			if (!camera) {
 				setSightings([]);
@@ -44,11 +45,13 @@ export default function CameraSidebar({ camera, currentUser, loadCameras, setSel
 		);
 	}
 
+	// Only the camera owner can change its range or delete it
 	const isOwner = currentUser && camera.user_id === currentUser.id;
 
 	async function handleSave() {
 		const value = Number(range);
 
+		// Camera range must stay between 1 and 5
 		if (value < 1 || value > 5) {
 			alert("Range must be between 1 and 5.");
 			return;

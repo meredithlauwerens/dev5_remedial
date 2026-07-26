@@ -44,7 +44,7 @@ export default function Map({ cameras, npcs, obstacles, loadCameras, selectedCam
 				let tileColor = "white";
 
 				if (npc) {
-					tileColor = "#F54949"; // red
+					tileColor = "#F54949"; 
 				}
 
 				if (camera) {
@@ -63,6 +63,7 @@ export default function Map({ cameras, npcs, obstacles, loadCameras, selectedCam
 
 					const distance = Math.sqrt(dx * dx + dy * dy);
 
+					// A cell is visible only when it is within the camera's range and has a clear line of sight
 					if (distance <= selectedCamera.range) {
 						visible = hasClearLineOfSight(selectedCamera, x, y);
 					}
@@ -76,6 +77,7 @@ export default function Map({ cameras, npcs, obstacles, loadCameras, selectedCam
 					cellBackground = "#7aecf9";
 				}
 
+				// Checks the cells between the camera and target to see if an obstacle blocks the view
 				function hasClearLineOfSight(camera, targetX, targetY) {
 					const dx = targetX - camera.x;
 					const dy = targetY - camera.y;
@@ -106,6 +108,7 @@ export default function Map({ cameras, npcs, obstacles, loadCameras, selectedCam
 						onClick={() => {
 							const existingCamera = cameras.find((camera) => camera.x === x && camera.y === y);
 
+							// Cameras cannot be placed on cells occupied by obstacles
 							if (existingCamera) {
 								setSelectedCamera(existingCamera);
 							} else if (obstacle) {

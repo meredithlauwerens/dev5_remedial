@@ -1,3 +1,4 @@
+// Base URL for the backend API
 const API_URL = "http://localhost:3000/api";
 
 export async function login(username) {
@@ -17,7 +18,7 @@ export async function login(username) {
 }
 
 export async function getCameras() {
-	const response = await fetch("http://localhost:3000/api/cameras");
+	const response = await fetch(`${API_URL}/cameras`);
 
 	if (!response.ok) {
 		throw new Error("Failed to load cameras");
@@ -109,7 +110,7 @@ export async function getNpcTrajectory(npcId) {
 }
 
 export async function getObstacles() {
-	const response = await fetch("http://localhost:3000/api/obstacles");
+	const response = await fetch(`${API_URL}/obstacles`);
 
 	if (!response.ok) {
 		throw new Error("Failed to fetch obstacles");
