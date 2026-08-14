@@ -28,10 +28,10 @@ export default function NpcTrajectorySidebar({ selectedNpc, npcs, setSelectedNpc
 	return (
 		<div
 			style={{
-				width: "280px",
-				borderLeft: "1px solid lightgray",
-				padding: "10px",
-				marginTop: "-70px",
+				background: "white",
+				borderRadius: 16,
+				padding: 20,
+				boxShadow: "0 8px 18px rgba(0,0,0,.15)",
 			}}
 		>
 			<h2>NPC Trajectory</h2>
@@ -49,8 +49,11 @@ export default function NpcTrajectorySidebar({ selectedNpc, npcs, setSelectedNpc
 				}}
 				style={{
 					width: "100%",
-					marginTop: "8px",
-					marginBottom: "20px",
+					padding: "10px",
+					borderRadius: 8,
+					border: "1px solid #ccc",
+					marginTop: 10,
+					marginBottom: 20,
 				}}
 			>
 				<option value="">Select NPC</option>
