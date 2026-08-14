@@ -127,7 +127,7 @@ export default function MapPage() {
 			>
 				<div>
 					<h2>Welcome {user?.username}</h2>
-					<p>📷 Your cameras: {userCameraCount} / 5</p>
+					<p>🔵 Your cameras: {userCameraCount} / 5</p>
 				</div>
 
 				<button
