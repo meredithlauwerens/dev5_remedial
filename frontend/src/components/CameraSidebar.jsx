@@ -33,9 +33,11 @@ export default function CameraSidebar({ camera, currentUser, loadCameras, setSel
 		return (
 			<div
 				style={{
-					width: "280px",
-					borderLeft: "1px solid lightgray",
-					padding: "20px",
+					background: "white",
+					borderRadius: 16,
+					padding: 20,
+					boxShadow: "0 8px 18px rgba(0,0,0,.15)",
+					height: "fit-content",
 				}}
 			>
 				<h2>Camera Information</h2>
@@ -88,10 +90,11 @@ export default function CameraSidebar({ camera, currentUser, loadCameras, setSel
 	return (
 		<div
 			style={{
-				width: "280px",
-				borderLeft: "1px solid lightgray",
-				padding: "10px",
-				marginTop: "-70px",
+				background: "white",
+				borderRadius: 16,
+				padding: 20,
+				boxShadow: "0 8px 18px rgba(0,0,0,.15)",
+				height: "fit-content",
 			}}
 		>
 			<h2>Camera Information</h2>
@@ -114,9 +117,47 @@ export default function CameraSidebar({ camera, currentUser, loadCameras, setSel
 						<strong>Range:</strong>
 					</p>
 
-					<input type="number" min="1" max="5" value={range} onChange={(e) => setRange(e.target.value)} />
-					<button onClick={handleSave}>Save</button>
-					<button onClick={handleDelete}>Delete</button>
+					<input
+						type="number"
+						min="1"
+						max="5"
+						value={range}
+						onChange={(e) => setRange(e.target.value)}
+						style={{
+							width: "90%",
+							padding: "10px 10px",
+							borderRadius: 8,
+							border: "1px solid #ccc",
+							marginBottom: 15,
+						}}
+					/>
+					<button
+						onClick={handleSave}
+						style={{
+							background: "#2563eb",
+							color: "white",
+							border: "none",
+							borderRadius: 8,
+							padding: "10px 16px",
+							cursor: "pointer",
+							marginRight: 10,
+						}}
+					>
+						Save
+					</button>
+					<button
+						onClick={handleDelete}
+						style={{
+							background: "#dc2626",
+							color: "white",
+							border: "none",
+							borderRadius: 8,
+							padding: "10px 16px",
+							cursor: "pointer",
+						}}
+					>
+						Delete
+					</button>
 				</>
 			) : (
 				<>
