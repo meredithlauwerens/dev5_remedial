@@ -100,7 +100,7 @@ export default function CameraSidebar({ camera, currentUser, loadCameras, setSel
 			<h2>Camera Information</h2>
 
 			<p>
-				<strong>🔵 Camera #{camera.id}</strong>
+				<strong>Camera #{camera.id}</strong>
 			</p>
 
 			<p>
