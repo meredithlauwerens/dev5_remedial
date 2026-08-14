@@ -19,7 +19,7 @@ export default function MapPage() {
 
 	// Counts only cameras owned by the currently logged-in user
 	const userCameraCount = user ? cameras.filter((camera) => camera.user_id === user.id).length : 0;
-	
+
 	const [npcTrajectory, setNpcTrajectory] = useState([]);
 	const [selectedNpc, setSelectedNpc] = useState(null);
 	const [obstacles, setObstacles] = useState([]);
@@ -91,17 +91,38 @@ export default function MapPage() {
 	return (
 		<div
 			style={{
-				maxWidth: "1300px",
-				margin: "0 auto",
+				minHeight: "100vh",
+				background: "linear-gradient(135deg,#0f172a,#1e3a8a)",
+				padding: "40px",
+				fontFamily: "Arial, sans-serif",
 			}}
 		>
-			<h1>Neighborhood Surveillance</h1>
-
+			{" "}
 			<div
 				style={{
+					maxWidth: "1500px",
+					margin: "0 auto",
+				}}
+			></div>
+			<h1
+				style={{
+					color: "white",
+					marginBottom: 30,
+					fontSize: 30,
+				}}
+			>
+				Neighborhood Surveillance
+			</h1>
+			<div
+				style={{
+					background: "white",
+					padding: "5px 20px",
+					borderRadius: 16,
+					boxShadow: "0 10px 25px rgba(0,0,0,.25)",
 					display: "flex",
 					justifyContent: "space-between",
 					alignItems: "center",
+					marginBottom: 30,
 				}}
 			>
 				<div>
@@ -109,11 +130,21 @@ export default function MapPage() {
 					<p>📷 Your cameras: {userCameraCount} / 5</p>
 				</div>
 
-				<div style={{ display: "flex", alignItems: "center", gap: "20px", marginTop: "-100px" }}>
-					<button onClick={handleLogout}>Log Out</button>
-				</div>
+				<button
+					onClick={handleLogout}
+					style={{
+						background: "#2563eb",
+						color: "white",
+						border: "none",
+						padding: "12px 20px",
+						borderRadius: 8,
+						cursor: "pointer",
+						fontWeight: "bold",
+					}}
+				>
+					Log Out
+				</button>
 			</div>
-
 			<div
 				style={{
 					display: "flex",
@@ -124,10 +155,10 @@ export default function MapPage() {
 				{/* Legend */}
 				<div
 					style={{
-						width: "180px",
-						border: "1px solid lightgray",
-						padding: "15px",
-						borderRadius: "8px",
+						background: "white",
+						borderRadius: 16,
+						padding: 20,
+						boxShadow: "0 8px 18px rgba(0,0,0,.15)",
 					}}
 				>
 					<h3>Legend</h3>
